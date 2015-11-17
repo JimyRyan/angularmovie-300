@@ -2,7 +2,7 @@
 
 angular.module('angularMovieApp', ['ngRoute', 'angularMovieUI', 'angularMovieCore']);
 
-angular.module('angularMovieApp').config(function($routeProvider) {
+angular.module('angularMovieApp').config(function($routeProvider, MovieProvider) {
   $routeProvider
     .when('/home', {
       templateUrl : 'partials/home.html',
@@ -19,4 +19,6 @@ angular.module('angularMovieApp').config(function($routeProvider) {
     .otherwise({
       redirectTo : '/home'
     });
+
+  MovieProvider.setUri('/server/api/movies');
 });

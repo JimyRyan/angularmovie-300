@@ -1,27 +1,57 @@
-"use strict";
+(function() {
+  "use strict";
 
-angular.module('angularMovieCore').service("Movie", function($http) {
-  var API_URI = '/server/api/movies';
+  angular.module('angularMovieCore').provider('Movie', MovieProvider);
 
-  return {
-    fetch : function() {
-      return $http.get(API_URI);
-    },
+  function MovieProvider() {
 
-    create : function(movie) {
-      return $http.post(API_URI, movie);
-    },
+    var _this = this;
 
-    remove : function(id) {
-      return $http.delete(API_URI + '/' + id);
-    },
+    var API_URI = null;
 
-    fetchOne : function(id) {
-      return $http.get(API_URI + '/' + id);
-    },
+    var _data = null;
 
-    update : function(movie) {
-      return $http.put('/server/api/movies', movie);
+    _this.setUri = function(uri) {
+      API_URI = uri;
+    };
+
+    _this.$get = MovieService;
+
+    MovieService.$inject = ['$http'];
+
+    function MovieService($http) {
+
+      var service = {
+        fetch: function () {
+
+          if (!_data) {
+            _data = $http.get(API_URI);
+          }
+
+          return _data;
+        },
+
+        create: function (movie) {
+          return $http.post(API_URI, movie);
+        },
+
+        remove: function (id) {
+          return $http.delete(API_URI + '/' + id);
+        },
+
+        fetchOne: function (id) {
+          return $http.get(API_URI + '/' + id);
+        },
+
+        update: function (movie) {
+          return $http.put('/server/api/movies', movie);
+        }
+      };
+
+      return service;
+
     }
+
   };
-});
+
+})();
