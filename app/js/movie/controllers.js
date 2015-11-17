@@ -28,7 +28,7 @@ angular.module('angularMovieCore').controller("homeController", function($scope)
 
 });
 
-angular.module('angularMovieCore').controller("moviesController", function($scope, Movie) {
+angular.module('angularMovieCore').controller("moviesController", function($scope, $filter, Movie) {
 
   // display mode by default
   $scope.tableView = false;
@@ -48,6 +48,7 @@ angular.module('angularMovieCore').controller("moviesController", function($scop
 
   Movie.fetch().success(function(resp) {
     $scope.movies = resp;
+    $scope.filteredMovies = $scope.movies;
   });
 
   $scope.deleteMovie = function(index) {
@@ -57,6 +58,16 @@ angular.module('angularMovieCore').controller("moviesController", function($scop
       }
     );
   };
+
+  $scope.filter = function() {
+    $scope.filteredMovies = $filter('filter')($scope.movies, $scope.search);
+  }
+
+  $scope.sort = function(sort, reverse) {
+    $scope.sort = sort;
+    $scope.reverse = reverse;
+    $scope.filteredMovies = $filter('orderBy')($scope.movies, $scope.sort, $scope.reverse);
+  }
 
 });
 
