@@ -1,6 +1,6 @@
 <!-- header-->
 <header class="page-header">
-    <h1>Ma vidéothèque <small>{{movies.length}} films</small>
+    <h1>Ma vidéothèque <small>{{ movies.length}} films</small>
         <button class="btn btn-primary" data-toggle="modal" data-target="#movie-form-modal">Ajouter un film</button>
     </h1>
 </header>
@@ -19,22 +19,22 @@
 <!-- liste des films -->
 <div ng-switch on="tableView" >
 <ul class="thumbnails" ng-switch-when="false">
-    <li ng-repeat="movie in movies | orderBy:tri:reverse | filter : search " class="span12">
-        <img ng-src="{{movie.poster | poster}}" class="span2" ui-sref="movie({id: movie.id})">
+    <li ng-repeat="movie in movies | filter : search | orderBy:tri:reverse " class="span12">
+        <img ng-src="{{ ::movie.poster | poster}}" class="span2" ui-sref="movie({id: '{{::movie.id}}'})">
         <div class="caption">
-            <h3><span ui-sref="movie({id: movie.id})">{{movie.title | uppercase}}</span>
-                <button class="btn btn-danger" ng-click="deleteMovie($index)"><i class="icon-trash icon-white"></i></button>
-                <a class="btn btn-info" href="#/movies/edit/{{movie.id}}"><i class="icon-edit icon-white"></i></a>
+            <h3><span ui-sref="movie({ id: '{{::movie.id}}'})">{{ ::movie.title | uppercase}}</span>
+                <button class="btn btn-danger" ng-click="deleteMovie($index)"><i class="icon-trash icon-@hite"></i></button>
+                <a class="btn btn-info" href="#/movies/edit/{{ ::movie.id}}"><i class="icon-edit icon-white"></i></a>
             </h3>
-            <editable label="Année de sortie" text="movie.releaseYear"></editable>
-            <editable label="Réalisateurs" text="movie.directors"></editable>
-            <editable label="Acteurs" text="movie.actors"></editable>
-            <p><b>Synopsis : </b>{{movie.synopsis}}</p>
-            <p><b>Note : </b>{{movie.rate | stars}}</p>
+            <p><b>Année de sortie</b> {{ ::movie.releaseYear}}</p>
+            <p><b>Réalisateurs</b>{{::movie.directors}}</p>
+            <p><b>Acteurs</b>{{::movie.actors}}</p>
+            <p><b>Synopsis : </b>{{ ::movie.synopsis}}</p>
+            <p><b>Note : </b>{{ ::movie.rate | stars}}</p>
         </div>
     </li>
 </ul>
-<table class="table table-striped" ng-switch-default>
+<table class="table table-striped" ng-switch-default ng-if="tableView">
     <thead>
     <tr>
         <th>#</th>
@@ -45,12 +45,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="movie in movies | orderBy:tri:reverse | filter : search ">
-        <td>{{$index + 1}}</td>
-        <td><editable text="movie.title"></editable></td>
-        <td>{{movie.directors}}</td>
-        <td>{{movie.releaseYear}}</td>
-        <td>{{movie.rate | stars}}</td>
+    <tr ng-repeat="movie in movies | filter : search | orderBy:tri:reverse ">
+        <td>{{ $index + 1}}</td>
+        <td><p>{{ ::movie.title}}</p></td>
+        <td>{{ ::movie.directors}}</td>
+        <td>{{ ::movie.releaseYear}}</td>
+        <td>{{ ::movie.rate | stars}}</td>
     </tr>
     </tbody>
 </table>
@@ -58,7 +58,7 @@
 
 
 <!-- formulaire de création - caché par défaut -->
-<div id="movie-form-modal" class="modal hide fade" ng-controller="movieFormController">
+<div id="movie-form-modal" class="modal hide fade" ng-controller="movieFormController" ng-if="!showAlert">
     <header class="modal-header">
         <button type="button" class="close" data-dismiss="modal">x</button>
         <h3>Ajouter un film</h3>
@@ -67,30 +67,30 @@
         <form name="movieForm" class="form-horizontal">
             <div class="control-group" ng-class="{error : movieForm.inputTitle.$error.required}">
                 <label class="control-label">Titre :</label>
-                <input type="text" name="inputTitle" ng-model="movie.title" autofocus required>
+                <input type="text" name="inputTitle" ng-model="::movie.title" autofocus required>
                 <span class="help-block" ng-show="movieForm.inputTitle.$error.required">Le titre est obligatoire</span>
             </div>
             <div class="control-group" ng-class="{error : movieForm.inputYear.$error.pattern}">
                 <label class="control-label">Année de sortie :</label>
-                <input type="text" name="inputYear" ng-model="movie.releaseYear" ng-pattern="/(19|20)\d\d/">
+                <input type="text" name="inputYear" ng-model="::movie.releaseYear" ng-pattern="/(19|20)\d\d/">
                 <span class="help-block" ng-show="movieForm.inputYear.$error.pattern">L'année n'est pas valide</span>
             </div>
             <div class="control-group">
                 <label class="control-label">Réalisateur : </label>
-                <input type="text" ng-model="movie.directors">
+                <input type="text" ng-model="::movie.directors">
             </div>
             <div class="control-group">
                 <label class="control-label">Acteurs :</label>
-                <input type="text" ng-model="movie.actors">
+                <input type="text" ng-model="::movie.actors">
             </div>
             <div class="control-group" ng-class="{error : movieForm.textareaSynopsis.$error.maxlength}">
                 <label class="control-label">Synopsis :</label>
-                <input type="text" ng-model="movie.synopsis" name="textareaSynopsis"  ng-maxlength="140">
+                <input type="text" ng-model="::movie.synopsis" name="textareaSynopsis"  ng-maxlength="140">
                 <span class="help-block" ng-show="movieForm.textareaSynopsis.$error.maxlength">140 caractères maximum</span>
             </div>
             <div class="control-group" ng-class="{error : movieForm.inputRate.$error.min || movieForm.inputRate.$error.max}">
                 <label class="control-label">Note :</label>
-                <input type="number" name="inputRate" placeholder="entre 1 et 5" ng-model="movie.rate" min="0" max="5">
+                <input type="number" name="inputRate" placeholder="entre 1 et 5" ng-model="::movie.rate" min="0" max="5">
                 <span class="help-block" ng-show="movieForm.inputRate.$error.min">La note doit être supérieure à 0</span>
                 <span class="help-block" ng-show="movieForm.inputRate.$error.max">La note doit être inférieure à 5</span>
 
