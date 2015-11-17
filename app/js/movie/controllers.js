@@ -52,18 +52,18 @@ angular.module('angularMovieCore').controller("moviesController", function($scop
   });
 
   $scope.deleteMovie = function(index) {
-    Movie.remove($scope.movies[index].id)
+    Movie.remove($scope.filteredMovies[index].id)
       .success(function(resp) {
-        $scope.movies.splice(index, 1);
+        $scope.filteredMovies.splice(index, 1);
       }
     );
   };
 
-  $scope.filter = function() {
+  $scope.filterMovies = function() {
     $scope.filteredMovies = $filter('filter')($scope.movies, $scope.search);
   }
 
-  $scope.sort = function(sort, reverse) {
+  $scope.sortMovies = function(sort, reverse) {
     $scope.sort = sort;
     $scope.reverse = reverse;
     $scope.filteredMovies = $filter('orderBy')($scope.movies, $scope.sort, $scope.reverse);
