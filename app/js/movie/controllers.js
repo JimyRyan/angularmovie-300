@@ -6,6 +6,18 @@ angular.module('angularMovieCore').controller("homeController", function($scope)
 
 });
 
+angular.module('angularMovieCore').controller("loadingController", function($scope, $rootScope) {
+
+  $rootScope.$on('$stateChangeStart' ,function() {
+      console.log('start');
+  });
+
+  $rootScope.$on('$stateChangeStart' ,function() {
+    console.log('start');
+  });
+
+});
+
 angular.module('angularMovieCore').controller("moviesController", function($scope, Movie) {
 
   // display mode by default
@@ -38,13 +50,10 @@ angular.module('angularMovieCore').controller("moviesController", function($scop
 
 });
 
-angular.module('angularMovieCore').controller('editMovieController', function($scope, Movie, $routeParams, $location) {
+angular.module('angularMovieCore').controller('editMovieController', function(movie, $scope, Movie, $location) {
 
-  var movieId = $routeParams.id;
+  $scope.movie = movie;
 
-  Movie.fetchOne(movieId).success(function(movie) {
-    $scope.movie = movie;
-  });
 
   $scope.updateMovie = function(movie) {
     Movie.update(movie)
