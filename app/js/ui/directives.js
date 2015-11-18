@@ -88,6 +88,7 @@ function titleValidatorDirective(Movie, $q) {
     require  : 'ngModel',
     link     : function(scope, element, attrs, ngModel) {
       // http://jaysoo.ca/2014/10/14/async-form-errors-and-messages-in-angularjs/
+      //
       ngModel.$asyncValidators.unique = titleValidator;
     }
   };
