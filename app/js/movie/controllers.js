@@ -72,8 +72,37 @@ angular.module('angularMovieCore').controller("moviesController", function($scop
 
 });
 
-angular.module('angularMovieCore').controller('movieController', function($scope, movie, $state, Movie) {
-  $scope.movie = movie.data;
+angular.module('angularMovieCore').controller('movieController', function($scope, movie, $state, Movie, $http) {
+  $scope.movie = {};
+
+  var promiseInformations = Movie.fetchInformations(movie.data.id);
+
+  promiseInformations.then(function(result) {
+    angular.extend($scope.movie, result.data);
+
+    //$scope.movie.releaseYear = result.data.releaseYear;
+    //$scope.movie.synopsis = result.data.synopsis;
+    //$scope.movie.rate = result.data.rate;
+
+    return Movie.fetchCasting(movie.data.id);
+  })
+      .then(function(result) {
+
+        angular.extend($scope.movie, result.data);
+
+        //$scope.movie.directors = result.data.directors;
+        //$scope.movie.actors = result.data.actors;
+
+        return Movie.fetchImages(movie.data.id);
+      })
+      .then(function(result) {
+
+        angular.extend($scope.movie, result.data);
+
+        //$scope.movie.poster = result.data.poster;
+
+        });
+
 
   $scope.deleteMovie = function(id) {
     Movie.remove(id)
@@ -82,6 +111,12 @@ angular.module('angularMovieCore').controller('movieController', function($scope
       }
     );
   };
+
+
+
+
+
+
 });
 
 angular.module('angularMovieCore').controller('editMovieController', function($scope, Movie, $stateParams, $location) {

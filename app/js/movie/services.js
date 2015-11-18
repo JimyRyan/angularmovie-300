@@ -14,7 +14,10 @@ angular.module('angularMovieCore').provider("Movie", function() {
       create   : create,
       remove   : remove,
       fetchOne : fetchOne,
-      update   : update
+      update   : update,
+      fetchInformations : fetchInformations,
+      fetchCasting : fetchCasting,
+      fetchImages : fetchImages
     };
 
     function fetch() {
@@ -35,6 +38,18 @@ angular.module('angularMovieCore').provider("Movie", function() {
 
     function update(movie) {
       return $http.put(API_URI, movie);
+    }
+
+    function fetchInformations(id) {
+      return $http.get(API_URI + '/' + id + '/informations');
+    }
+
+    function fetchCasting(id) {
+      return $http.get(API_URI + '/' + id + '/casting');
+    }
+
+    function fetchImages(id) {
+      return $http.get(API_URI + '/' + id + '/images');
     }
   }];
 });
