@@ -65,10 +65,12 @@
     </header>
     <section class="modal-body">
         <form name="movieForm" class="form-horizontal">
-            <div class="control-group" ng-class="{error : movieForm.inputTitle.$error.required}">
+            <div class="control-group" ng-class="{error : movieForm.inputTitle.$error}">
                 <label class="control-label">Titre :</label>
-                <input type="text" name="inputTitle" ng-model="movie.title" autofocus required>
+                <input type="text" name="inputTitle" ng-model="movie.title" autofocus required title-validator>
                 <span class="help-block" ng-show="movieForm.inputTitle.$error.required">Le titre est obligatoire</span>
+                <span class="help-block" ng-show="movieForm.inputTitle.$error.unique">Le titre déja présent</span>
+                <span class="help-block">
             </div>
             <div class="control-group" ng-class="{error : movieForm.inputYear.$error.pattern}">
                 <label class="control-label">Année de sortie :</label>

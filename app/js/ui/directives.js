@@ -47,7 +47,7 @@ angular.module('angularMovieUI').directive('rating', function() {
   return {
     restrict   : 'E',
     transclude : true,
-    template   : '<ul class="rating readonly">' +
+    template   : '<form><input><input></form><ul class="rating readonly">' +
     '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}">' +
     '    <ng-transclude></ng-transclude>' +
     '  </li>' +
@@ -75,3 +75,36 @@ angular.module('angularMovieUI').directive('rating', function() {
     }
   };
 });
+
+
+angular.module('angularMovieUI')
+    .directive('titleValidator', titleValidatorDirective);
+
+titleValidatorDirective.$inject = ['Movie', '$q'];
+
+function titleValidatorDirective(Movie, $q) {
+  return {
+    restrict : 'A',
+    require  : 'ngModel',
+    link     : function(scope, element, attrs, ngModel) {
+      // http://jaysoo.ca/2014/10/14/async-form-errors-and-messages-in-angularjs/
+      ngModel.$asyncValidators.unique = titleValidator;
+    }
+  };
+
+  function titleValidator(value) {
+    // Promise
+
+    var deferred = $q.defer();
+
+    Movie.search(value)
+    .then(function(result) {
+      deferred.reject(); // Le reject falidator a besoin d'un reject (ignore le false)
+    })
+    .catch(function(result) {
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  }
+}
