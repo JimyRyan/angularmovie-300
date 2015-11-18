@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('angularMovieCore').controller("mainController", function($scope, $rootScope) {
+angular.module('angularMovieCore').controller("mainController", function($scope, $rootScope, $translate) {
 
   $scope.loading = false;
 
@@ -20,6 +20,9 @@ angular.module('angularMovieCore').controller("mainController", function($scope,
       $scope.loading = false;
     });
 
+  $scope.setLang = function (key) {
+    $translate.use(key);
+  };
 });
 
 angular.module('angularMovieCore').controller("homeController", function($scope) {

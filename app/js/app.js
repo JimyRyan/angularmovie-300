@@ -1,8 +1,8 @@
 "use strict";
 
-angular.module('angularMovieApp', ['ui.router', 'angularMovieUI', 'angularMovieCore']);
+angular.module('angularMovieApp', ['ui.router', 'pascalprecht.translate', 'angularMovieUI', 'angularMovieCore']);
 
-angular.module('angularMovieApp').config(function($stateProvider, $urlRouterProvider, MovieProvider) {
+angular.module('angularMovieApp').config(function($stateProvider, $urlRouterProvider, $translateProvider, MovieProvider) {
 
   $stateProvider
     .state('home', {
@@ -35,4 +35,13 @@ angular.module('angularMovieApp').config(function($stateProvider, $urlRouterProv
   $urlRouterProvider.otherwise('/home');
 
   MovieProvider.setURI('/server/api/movies');
+
+  // https://github.com/angular-translate/angular-translate/wiki/Asynchronous-loading
+
+  $translateProvider.useStaticFilesLoader({
+      prefix: 'locales/',
+      suffix: '.json'
+  });
+  $translateProvider.preferredLanguage('enUS');
+
 });

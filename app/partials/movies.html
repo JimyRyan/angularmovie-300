@@ -1,7 +1,7 @@
 <!-- header-->
 <header class="page-header">
-    <h1>Ma vidéothèque <small>{{filteredMovies.length}} films</small>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#movie-form-modal">Ajouter un film</button>
+    <h1>{{ 'app.movies.mylibrary' | translate }} <small>{{filteredMovies.length}} {{ 'app.movies.xmovies' | translate }}</small>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#movie-form-modal">{{ 'app.movies.addmovie' | translate }}</button>
     </h1>
 </header>
 
@@ -26,7 +26,7 @@
                 <button class="btn btn-danger" ng-click="deleteMovie($index)"><i class="icon-trash icon-white"></i></button>
                 <a class="btn btn-info" href="#/movies/edit/{{movie.id}}"><i class="icon-edit icon-white"></i></a>
             </h3>
-            <editable label="Année de sortie" text="movie.releaseYear"></editable>
+            <editable label="{{ 'app.common.title' | translate }}" text="movie.releaseYear"></editable>
             <editable label="Réalisateurs" text="movie.directors"></editable>
             <editable label="Acteurs" text="movie.actors"></editable>
             <p><b>Synopsis : </b>{{movie.synopsis}}</p>
@@ -66,10 +66,10 @@
     <section class="modal-body">
         <form name="movieForm" class="form-horizontal">
             <div class="control-group" ng-class="{error : movieForm.inputTitle.$error.required || movieForm.inputTitle.$error.titleAvailable}">
-                <label class="control-label">Titre :</label>
+                <label class="control-label">{{ 'app.common.title' | translate }} :</label>
                 <input movie-available-validator type="text" name="inputTitle" ng-model="movie.title" ng-model-options="{ debounce: { default : 500, blur: 0 }}" autofocus required />
-                <span class="help-block" ng-show="movieForm.inputTitle.$error.required">Le titre est obligatoire</span>
-                <span class="help-block" ng-show="movieForm.inputTitle.$error.titleAvailable">Le titre n'est pas disponible</span>
+                <span class="help-block" ng-show="movieForm.inputTitle.$error.required">{{ 'app.form.errors.title.required' | translate }}</span>
+                <span class="help-block" ng-show="movieForm.inputTitle.$error.titleAvailable">{{ 'app.form.errors.title.unvailable' | translate }}</span>
             </div>
             <div class="control-group" ng-class="{error : movieForm.inputYear.$error.pattern}">
                 <label class="control-label">Année de sortie :</label>
