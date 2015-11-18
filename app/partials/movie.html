@@ -18,8 +18,8 @@
          <p><b>Année de sortie : </b>{{movie.releaseYear}}</p>
          <p><b>Synopsis : </b>{{movie.synopsis}}</p>
          <p><b>Note #1 : </b><movie-rating1 rate="{{movie.rate}}">*</movie-rating1></p><hr>
-         <p><b>Note #2 : </b><movie-rating2 rate="{{movie.rate}}">*</movie-rating2></p><hr>
-         <p><b>Note #3 : </b><movie-rating3 rate="{{movie.rate}}">*</movie-rating3></p><hr>
+         <p><b>Note #2 : </b><movie-rating2 ng-model="movie.rate">*</movie-rating2></p><hr>
+         <p><b>Note #3 : </b><movie-rating3 ng-model="movie.rate" max="5"><i class="fa fa-star"></i></movie-rating3></p><hr>
       </div>
       <div role="tabpanel" class="tab-pane" id="images">
          <img ng-src="{{movie.poster | poster}}" class="span2">

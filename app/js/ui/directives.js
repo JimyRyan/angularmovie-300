@@ -75,33 +75,61 @@ angular.module('angularMovieUI').directive('movieRating2', function() {
 
   return {
     restrict    : 'E',
-    replace     : true,
     transclude : true,
     scope       : {
-      rate : '=ngModel',  // Obligatoire
-      max: '=?'     // Optionel
+      rate : '=ngModel',  // = : Obligatoire (dans le HTML : ... ng-model="movie.rate" ... (<rating ng-model="movie.rate" max="5"><i class="fa fa-star"></i></rating>)
+      max: '=?'     // =? : Optionel
     },
     link        : function(scope, element, attrs) {
 
       scope.max = scope.max || 5;
 
-      console.log(scope.max);
-
       scope.rateArray = [];
 
-      for (var i = 0 ; i < scope.rate ; i++) {
-        scope.rateArray.push({'filled': true}); //filled => étoile remplie...
+      for (var i = 0 ; i < scope.max ; i++) {
+        scope.rateArray.push({'filled': (i < scope.rate ? true : false)}); //filled => étoile remplie...
       };
 
-      console.log(scope.rateArray);
     },
-    //template: '<div><span ng-repeat="i in scope.rateArray"><ng-transclude></ng-transclude></span></div>',
-    template   : '<ul class="rating readonly">' +
-    '  <li ng-repeat="star in scope.rateArray" class="star" ng-class="{filled: star.filled}">' +
+    template   : // Dans le template : pas besoin de placer le scope
+    '  <div><span ng-repeat="star in rateArray">' +
     '    <ng-transclude></ng-transclude>' +
-    '  </li>' +
-    '</ul>'
+    '  </span></div>'
 
   }
 
+});
+
+
+angular.module('angularMovieUI').directive('movieRating3', function() {
+  return {
+    restrict   : 'E',
+    transclude : true,
+    template   : '<ul class="rating readonly">' +
+    '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}">' +
+    '    <ng-transclude></ng-transclude>' +
+    '  </li>' +
+    '</ul>',
+    scope      : {
+      ratingValue : '=ngModel',
+      max         : '=?'
+    },
+    link       : function(scope, element, attributes) {
+      scope.max = scope.max || 5;
+
+      function updateValue() {
+        scope.stars = [];
+        for (var i = 0; i < scope.max; i++) {
+          scope.stars.push({
+            filled : i < scope.ratingValue
+          });
+        }
+      }
+      scope.$watch('ratingValue', function(newValue) {
+        if (newValue || scope.stars == undefined) {
+          updateValue();
+        }
+      });
+    }
+  };
 });
