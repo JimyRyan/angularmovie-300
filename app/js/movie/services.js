@@ -40,6 +40,7 @@ angular.module('angularMovieCore').provider("Movie", function() {
       return $http.put(API_URI, movie);
     }
 
+    // $http.get => retourne une promise
     function fetchInformations(id) {
       return $http.get(API_URI + '/' + id + '/informations');
     }
