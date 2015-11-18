@@ -72,12 +72,31 @@ angular.module('angularMovieCore').controller("moviesController", function($scop
 
 });
 
-angular.module('angularMovieCore').controller('movieController', function($scope, movie, $state, Movie, $http) {
+angular.module('angularMovieCore').controller('movieController', function($scope, movie, $state, Movie, $http, $q, $timeout) {
   $scope.movie = {};
 
-  var promiseInformations = Movie.fetchInformations(movie.data.id);
+  var deferred = $q.defer();
 
-  promiseInformations.then(function(result) {
+  console.log('Using $q.defer :: wait 1 sec..');
+  $timeout(function () {
+    console.log('1sec OK');
+    deferred.resolve("Success");
+  }, 1000);
+
+  deferred.promise
+  .then(function() {
+
+  })
+  // Wait 2 sec before the 1st call
+  // $timeout renvoie une promise
+  .then(function() {
+    console.log('Using $q.defer :: wait 2 sec..');
+    return $timeout(function () {
+      console.log('2sec Ok');
+      return Movie.fetchInformations(movie.data.id);
+    }, 2000);
+  })
+  .then(function(result) {
 
     angular.extend($scope.movie, result.data);
       // = aux 3 lignes
