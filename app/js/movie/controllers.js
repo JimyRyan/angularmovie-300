@@ -87,22 +87,22 @@ angular.module('angularMovieCore').controller('movieController', function($scope
 
     return Movie.fetchCasting(movie.data.id);
   })
-      .then(function(result) {
+  .then(function(result) {
 
-        angular.extend($scope.movie, result.data);
-          // = aux 2 lignes
-          //$scope.movie.directors = result.data.directors;
-          //$scope.movie.actors = result.data.actors;
+    angular.extend($scope.movie, result.data);
+      // = aux 2 lignes
+      //$scope.movie.directors = result.data.directors;
+      //$scope.movie.actors = result.data.actors;
 
-        return Movie.fetchImages(movie.data.id);
-      })
-      .then(function(result) {
+    return Movie.fetchImages(movie.data.id);
+  })
+  .then(function(result) {
 
-        angular.extend($scope.movie, result.data);
+    angular.extend($scope.movie, result.data);
+      // = a la ligne
+      //$scope.movie.poster = result.data.poster;
 
-        //$scope.movie.poster = result.data.poster;
-
-        });
+    });
 
 
   $scope.deleteMovie = function(id) {
