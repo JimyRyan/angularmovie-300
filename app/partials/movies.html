@@ -67,10 +67,9 @@
         <form name="movieForm" class="form-horizontal">
             <div class="control-group" ng-class="{error : movieForm.inputTitle.$error}">
                 <label class="control-label">Titre :</label>
-                <input type="text" name="inputTitle" ng-model="movie.title" autofocus required title-validator>
+                <input type="text" name="inputTitle" ng-model="movie.title" autofocus required title-validator ng-model-options="{ debounce: { default : 500, blur: 0 }}">
                 <span class="help-block" ng-show="movieForm.inputTitle.$error.required">Le titre est obligatoire</span>
                 <span class="help-block" ng-show="movieForm.inputTitle.$error.unique">Le titre déja présent</span>
-                <span class="help-block">
             </div>
             <div class="control-group" ng-class="{error : movieForm.inputYear.$error.pattern}">
                 <label class="control-label">Année de sortie :</label>
@@ -79,7 +78,8 @@
             </div>
             <div class="control-group">
                 <label class="control-label">Réalisateur : </label>
-                <input type="text" ng-model="movie.directors">
+                <input type="text" name="inputDirectors" ng-model="movie.directors" director-validator>
+                <span class="help-block" ng-show="movieForm.inputDirectors.$error.director">Le prénom et le nom sont requis</span>
             </div>
             <div class="control-group">
                 <label class="control-label">Acteurs :</label>
@@ -92,10 +92,7 @@
             </div>
             <div class="control-group" ng-class="{error : movieForm.inputRate.$error.min || movieForm.inputRate.$error.max}">
                 <label class="control-label">Note :</label>
-                <input type="number" name="inputRate" placeholder="entre 1 et 5" ng-model="movie.rate" min="0" max="5">
-                <span class="help-block" ng-show="movieForm.inputRate.$error.min">La note doit être supérieure à 0</span>
-                <span class="help-block" ng-show="movieForm.inputRate.$error.max">La note doit être inférieure à 5</span>
-
+                <movie-rating4 ng-model="movie.rate" min="0" max="5"><i class="fa fa-star"></i></movie-rating4>
             </div>
         </form>
     </section>
