@@ -42,3 +42,29 @@ angular.module('angularMovieUI').directive('editable', function() {
   }
 
 });
+
+angular.module('angularMovieUI').directive('movieRating', function() {
+
+  return {
+    restrict    : 'E',
+    replace     : true,
+    scope       : {
+      rate : '@'
+    },
+    link        : function(scope, element, attrs, ctrl, transclude) {
+
+
+      var count = 0;
+      do {
+        transclude(function (data) {
+        });
+        count++;
+      } while (parseInt(scope.rate) > count);
+
+    },
+    transclude : true,
+    //template: '<span><ng-transclude></ng-transclude></span>'
+    template: '<span></span>'
+  }
+
+});
