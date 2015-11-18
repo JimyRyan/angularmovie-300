@@ -78,20 +78,21 @@ angular.module('angularMovieCore').controller('movieController', function($scope
   var promiseInformations = Movie.fetchInformations(movie.data.id);
 
   promiseInformations.then(function(result) {
-    angular.extend($scope.movie, result.data);
 
-    //$scope.movie.releaseYear = result.data.releaseYear;
-    //$scope.movie.synopsis = result.data.synopsis;
-    //$scope.movie.rate = result.data.rate;
+    angular.extend($scope.movie, result.data);
+      // = aux 3 lignes
+      //$scope.movie.releaseYear = result.data.releaseYear;
+      //$scope.movie.synopsis = result.data.synopsis;
+      //$scope.movie.rate = result.data.rate;
 
     return Movie.fetchCasting(movie.data.id);
   })
       .then(function(result) {
 
         angular.extend($scope.movie, result.data);
-
-        //$scope.movie.directors = result.data.directors;
-        //$scope.movie.actors = result.data.actors;
+          // = aux 2 lignes
+          //$scope.movie.directors = result.data.directors;
+          //$scope.movie.actors = result.data.actors;
 
         return Movie.fetchImages(movie.data.id);
       })
