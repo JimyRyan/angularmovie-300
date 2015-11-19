@@ -8,12 +8,18 @@ angular.module('angularMovieCore').controller("homeController", function($scope)
 
 angular.module('angularMovieCore').controller("loadingController", function($scope, $rootScope) {
 
-  $rootScope.$on('$stateChangeStart' ,function() {
-      console.log('start');
+  $scope.loading = false;
+
+  $rootScope.$on('$stateChangeStart' ,function(event, toState, toParams, fromState, fromParams) {
+    $scope.loading = true;
   });
 
-  $rootScope.$on('$stateChangeStart' ,function() {
-    console.log('start');
+  $rootScope.$on('$stateChangeSuccess' ,function(event, toState, toParams, fromState, fromParams) {
+    $scope.loading = false;
+  });
+
+  $rootScope.$on('$stateChangeError' ,function(event, toState, toParams, fromState, fromParams) {
+    $scope.loading = false;
   });
 
 });

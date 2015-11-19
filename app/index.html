@@ -2,14 +2,14 @@
 <html ng-app="angularMovieApp">
 <head>
    <title>AngularMovie</title>
-   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="bower_components/bootstrap.css/css/bootstrap.min.css">
+   <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
    <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
+<body ng-controller="loadingController">
 
 <!-- barre de navigation -->
 <header class="navbar navbar-fixed-top">
-
    <div class="navbar-inner">
       <section class="container">
          <a class="brand" href="#/welcome">AngularMovie</a>
@@ -21,6 +21,9 @@
 </header>
 
 <!-- partie principale -->
+<div ng-show="loading" class="modal-loading text-center">
+   <i class="fa fa-spinner fa-spin fa-5x"></i>
+</div>
 <section class="container" ui-view></section>
 
 <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
