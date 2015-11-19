@@ -2,12 +2,12 @@
   'use strict';
 
   angular.module('app.interceptors')
-    .factory('errInterceptorService', ['$rootScope', '$q', '$log', 'errInterceptorConfig', '$cookies', errInterceptorService]);
+    .factory('csrfInterceptorService', ['$rootScope', '$q', '$log', '$cookies', csrfInterceptorService]);
 
-  function errInterceptorService($rootScope,
+  function csrfInterceptorService($rootScope,
                                  $q,
                                  $log,
-                                 errInterceptorConfig, $cookies) {
+                                 $cookies) {
 
     return {
       responseError : function(rejection) {
