@@ -45,3 +45,14 @@ angular.module('angularMovieApp').config(['$translateProvider', function ($trans
   });
   $translateProvider.preferredLanguage('frFR');
 }]);
+
+// Modifie pour tout les appels
+/*
+angular.module('angularMovieApp').config(function ($httpProvider) {
+  $httpProvider.defaults.transformResponse.push
+  (function (data, headerGetter) {
+    return angular.fromJson(data).data;
+  });
+});
+*/
+
