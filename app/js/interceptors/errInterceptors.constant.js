@@ -7,5 +7,5 @@
   };
 
   angular.module('app.interceptors')
-    .constant('errInterceptorConfig', errInterceptorConfig);
+    .constant('errInterceptorConfig', errInterceptorConfig); // GETTER
 })();
