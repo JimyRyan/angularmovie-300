@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('angularMovieApp', ['ui.router', 'angularMovieUI', 'angularMovieCore', 'pascalprecht.translate']);
+angular.module('angularMovieApp', ['ui.router', 'angularMovieUI', 'angularMovieCore']);
 
 angular.module('angularMovieApp').config(function($stateProvider, $urlRouterProvider, MovieProvider) {
 
