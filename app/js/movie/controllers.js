@@ -45,6 +45,12 @@ angular.module('angularMovieCore').controller("mainController", function($scope,
       $scope.logged = false;
     });
 
+  // Watch the 401 error !
+  $rootScope.$on('401_ERROR',
+      function() {
+        $scope.login();
+      });
+
   $scope.login = function() {
     if (!$scope.modalLoginOpened) {
       var modal               = $modal.open({
